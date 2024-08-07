@@ -9,7 +9,7 @@ function reflex_agent(location, state) {
 
 function test(states) {
     if (stateCount >= MAX_STATES) {
-        document.getElementById("log").innerHTML += "<br>Reached 8 states. Terminating.";
+        log("Reached 8 states. Terminating.");
         return;
     }
 
@@ -17,7 +17,7 @@ function test(states) {
     var state = states[0] == "A" ? states[1] : states[2];
     var action_result = reflex_agent(location, state);
     
-    document.getElementById("log").innerHTML += "<br>Location: " + location + " | Action: " + action_result;
+    log(`Location: ${location} | Action: ${action_result}`);
     
     if (action_result == "CLEAN") {
         if (location == "A") states[1] = "CLEAN";
@@ -28,7 +28,13 @@ function test(states) {
 
     stateCount++;
     
-    setTimeout(function(){ test(states); }, 2000);
+    setTimeout(() => test(states), 2000);
+}
+
+function log(message) {
+    const logElement = document.getElementById("log");
+    logElement.innerHTML += message + "<br>";
+    logElement.scrollTop = logElement.scrollHeight;
 }
 
 var states = ["A","DIRTY","DIRTY"];
